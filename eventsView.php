@@ -37,7 +37,7 @@
     </header>
 
     <div>
-        <h1 style="text-align:center; color:white; padding-top:1.5em"><?= $event["eventName"] ?></h1>
+        <h1 style="text-align:center; color:white; padding-top:0.5em"><?= $event["eventName"] ?></h1>
         <h2 style="text-align:center; color:white;">Signups</h2>
         <div class = "table" >
             <table class="content-table">
@@ -58,7 +58,7 @@
                             <td><?= $signups["userAge"] ?></td>
                             <td><?= $signups["userGender"] ?></td>
                             <td><?= $signups["userCountry"] ?></td>
-                            <td></td>
+                            <td><button onclick="window.location.href = 'includes/deleteSignup.inc.php?ID=<?= $id ?>';" style="background-color:red">Delete</button></td>
                         </tr>
 
                     <?php } ?>  

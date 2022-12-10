@@ -28,7 +28,7 @@
     </header>
 
     <div>
-        <h1 style="text-align:center; color:white; padding-top:1.5em">Events</h1>
+        <h1 style="text-align:center; color:white; padding-top:0.5em">Events</h1>
         <div class = "table" >
             <table class="content-table">
                 <thead>
@@ -60,7 +60,7 @@
                 </tbody>
             </table>
         </div>
-        <div style="display:flex; justify-content:center">
+        <div style="display:flex; justify-content:center; margin-bottom:2em">
             <a href="events.add.php"><button>Add Event</button></a>
         </div>
     </div>

@@ -292,3 +292,17 @@ function alreadySigned($conn, $name, $id){
         return $result;
     }
 }
+
+function deleteEvent($conn, $name, $id){
+    $sql = "DELETE FROM signups WHERE userID = ? AND eventId = ?";
+    $stmt = mysqli_stmt_init($conn);
+    if (!mysqli_stmt_prepare($stmt, $sql)){
+        header("location: ../events.edit.php?error=stmtfailed&ID=" . $id);
+        exit();
+    }
+
+    mysqli_stmt_bind_param($stmt, "ii", $id, $name);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    header("location: ../users.php?error=none");
+}
