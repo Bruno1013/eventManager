@@ -1,5 +1,19 @@
 <?php
+    include("includes/db.inc.php");
+    if (!isset($_SESSION["userID"])){
+        header("location:index.php");
+    }
+
+    $sql = "SELECT * FROM users";
+    $result = mysqli_query($conn, $sql);
+    
+    $sql = "SELECT * FROM users WHERE userID =" . $_SESSION["userID"];
+    $resultData = mysqli_query($conn, $sql);
+    $loggedIn = mysqli_fetch_assoc($resultData);
 ?>
+
+
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -7,71 +21,71 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Eventos</title>
+    <title>Users</title>
 </head>
 <body>
     <header>
         <nav>
             <ul class="navLinks">
-                <li><a href="events.php">Eventos</a></li>
-                <li><a href="">Utilizadores</a></li>
+                <li><a href="events.php">Events</a></li>
+                <li><a href="">Users</a></li>
             </ul>
         </nav>
-        <a href=""><button>Sign off</button></a>
+        <a href="includes/logout.inc.php"><button>Sign off</button></a>
     </header>
 
     <div>
-        <h1 style="text-align:center; color:white; padding-top:1.5em">Utilizadores</h1>
-        <div class = "tabble" >
+        <h1 style="text-align:center; color:white; padding-top:1.5em">Users</h1>
+        <div class = "table" >
             <table class="content-table">
                 <thead>
                     <tr>
-                        <th>Nome</th>
-                        <th>Idade</th>
-                        <th>Sexo</th>
-                        <th>País</th>
+                        <th>Name</th>
+                        <th>Age</th>
+                        <th>Gender</th>
+                        <th>Country</th>
                         <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <tr>
-                        <td><a href="">TomorrowLand</a></td>
-                        <td>Festival</td>
-                        <td>Germany</td>
-                        <td>December 23-25th</td>
-                        <td><a href="events.edit.php"><button style="background-color:#32a852">Edit</button></a></td>
-                        <td><a href="events.delete.php"><button style="background-color:red">Remover</button></a></td>
+                    <tr class="activeRow">
+                        <td><?=$loggedIn["userName"]?></td>
+                        <td><?=$loggedIn["userAge"]?></td>
+                        <td><?=$loggedIn["userGender"]?></td>
+                        <td><?=$loggedIn["userCountry"]?></td>
+                        <td><a href="<?= "users.edit.php?ID=" . $_SESSION["userID"] ?>"><button style="background-color:#32a852">Edit</button></a></td>
                     </tr>
                     <tr>
-                        <td><a href="">TomorrowLand</a></td>
-                        <td>Festival</td>
-                        <td>Germany</td>
-                        <td>December 23-25th</td>
-                        <td><a href="events.edit.php"><button style="background-color:#32a852">Edit</button></a></td>
-                        <td><a href="events.delete.php"><button style="background-color:red">Remover</button></a></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
+                        <td></td>
                     </tr>
-                    <tr>
-                        <td><a href="">TomorrowLand</a></td>
-                        <td>Festival</td>
-                        <td>Germany</td>
-                        <td>December 23-25th</td>
-                        <td><a href="events.edit.php"><button style="background-color:#32a852">Edit</button></a></td>
-                        <td><a href="events.delete.php"><button style="background-color:red">Remover</button></a></td>
-                    </tr>
-                    <tr>
-                        <td><a href="">TomorrowLand</a></td>
-                        <td>Festival</td>
-                        <td>Germany</td>
-                        <td>December 23-25th</td>
-                        <td><a href="events.edit.php"><button style="background-color:#32a852">Edit</button></a></td>
-                        <td><a href="events.delete.php"><button style="background-color:red">Remover</button></a></td>
-                    </tr>   
+
+                    <?php while($row = mysqli_fetch_assoc($result)) {
+                        if($row["userID"] == $_SESSION["userID"]){}
+                        else{ ?>
+                        
+                        <tr>
+                            <td><?= $row["userName"] ?></td>
+                            <td><?= $row["userAge"] ?></td>
+                            <td><?= $row["userGender"] ?></td>
+                            <td><?= $row["userCountry"] ?></td>
+                            <td><a href=" <?= "users.edit.php?ID=" . $row["userID"] ?>"><button style="background-color:#32a852">Edit</button></a></td>
+                            <td><a href=" <?= "users.delete.php?ID=" . $row["userID"] ?>"><button style="background-color:red">Delete</button></a></td>
+                        </tr>
+
+                    <?php }} ?>   
                     
                 </tbody>
             </table>
         </div>
-        <div class="bottom"></div>
+        <div style="display:flex; justify-content:center">
+            <a href="users.add.php"><button>Add User</button></a>
+        </div>
     </div>
 </body>
 </html>

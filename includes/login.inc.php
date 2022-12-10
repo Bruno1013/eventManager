@@ -1,17 +1,19 @@
 <?php
-    /*require_once "db.inc.php"
+    if (isset($_POST["submit"])) {
 
+        $username = $_POST["name"];
+        $password = $_POST["password"];
 
-    if(isset($_POST["submit"])){
-        $uid = $_POST[email];
-        $pss = $_POST[password];
-    }else{
-        header("location: ../index.php")
+        require "db.inc.php";
+        require "functions.inc.php";
+
+        if (emptyInputLogin($username, $password) !== false) {
+            header("location: ../index.php?error=emptyinput");
+            exit();
+        }
+
+        loginUser($conn, $username, $password);
     }
-
-    $sql = "SELECT * FROM users WHERE usersUid = ? OR usersEmail = ?;";
-    */
-
-
-    header("location:../events.php");
-?>
+    else{
+        header("location: ../index.php");
+    }

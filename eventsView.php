@@ -4,8 +4,17 @@
         header("location:index.php");
     }
 
-    $sql = "SELECT * FROM events";
+    $id = $_GET["ID"];
+
+    $sql = "SELECT * FROM events WHERE eventsId=" . $id; //For name of event
     $result = mysqli_query($conn, $sql);
+    $event = mysqli_fetch_assoc($result);
+
+
+    $sql = "SELECT * FROM signups LEFT JOIN users ON signups.userId = users.userID WHERE Signups.eventId = " . $id;
+    $result = mysqli_query($conn, $sql);
+
+
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +23,7 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="style.css">
-    <title>Events</title>
+    <title>Signups</title>
 </head>
 <body>
     <header>
@@ -28,31 +37,28 @@
     </header>
 
     <div>
-        <h1 style="text-align:center; color:white; padding-top:1.5em">Events</h1>
+        <h1 style="text-align:center; color:white; padding-top:1.5em"><?= $event["eventName"] ?></h1>
+        <h2 style="text-align:center; color:white;">Signups</h2>
         <div class = "table" >
             <table class="content-table">
                 <thead>
                     <tr>
                         <th>Name</th>
-                        <th>Type</th>
-                        <th>Capacity</th>
-                        <th>Schedule</th>
+                        <th>Age</th>
+                        <th>Gender</th>
                         <th>Country</th>
-                        <th></th>
                         <th></th>
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($row = mysqli_fetch_assoc($result)) { ?>
+                    <?php while($signups = mysqli_fetch_assoc($result)) { ?>
                         
                         <tr>
-                            <td><a href="eventsView.php?ID=<?= $row["eventsId"] ?>" style="color: #009879;"><?= $row["eventName"] ?></a></td>
-                            <td><?= $row["eventType"] ?></td>
-                            <td><?= $row["eventCapacity"] ?></td>
-                            <td><?= $row["eventSchedule"] ?></td>
-                            <td><?= $row["eventCountry"] ?></td>
-                            <td><a href=" <?= "events.edit.php?ID=" . $row["eventsId"]?> "><button style="background-color:#32a852">Edit</button></a></td>
-                            <td><a href=" <?= "events.delete.php?ID=" . $row["eventsId"]?> "> <button style="background-color:red">Delete</button></a></td>
+                            <td><?= $signups["userName"] ?></td>
+                            <td><?= $signups["userAge"] ?></td>
+                            <td><?= $signups["userGender"] ?></td>
+                            <td><?= $signups["userCountry"] ?></td>
+                            <td></td>
                         </tr>
 
                     <?php } ?>  
@@ -61,7 +67,7 @@
             </table>
         </div>
         <div style="display:flex; justify-content:center">
-            <a href="events.add.php"><button>Add Event</button></a>
+            <button onclick="window.location.href = 'signup.add.php?ID=<?= $id?>';">Add signup</button>
         </div>
     </div>
 </body>
