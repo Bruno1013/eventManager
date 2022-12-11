@@ -1,8 +1,8 @@
 <?php
   include("includes/db.inc.php");
-  // if (!isset($_SESSION["userID"])){
-  //   header("location:index.php");
-  // }
+  if (!isset($_SESSION["userID"])){
+    header("location:index.php");
+  }
 
   $id = $_GET["ID"];
   $sql = "SELECT * FROM users WHERE userID =" . $id;
@@ -37,7 +37,19 @@
         <div style="display:flex; justify-content:center;">
             <input type="submit" name="submit">     
         </div>
-        
+        <div style="text-align:center; color:red; margin-top:1em">
+        <?php
+          if(isset($_GET["error"])){
+            if($_GET["error"] == "emptyinput"){
+              echo "Fill in all fields";
+            }else if($_GET["error"] == "stmtfailed"){
+              echo "SQL statement failed to initialize";
+            }else if($_GET["error"] == "wrongPassword"){
+              echo "Old password doesn't match password in database";
+            }
+          }
+        ?>
+      </div>
     </form>
   </div>
   <div style="display:flex; justify-content:center; margin-top:1em">

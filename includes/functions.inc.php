@@ -11,7 +11,7 @@ function emptyInputSignup($name, $email, $username, $age, $country, $gender, $pa
 
 function invalidName($name){
     $result;
-    if(!preg_match("/^[a-zA-Z]*$/", $name)){
+    if(!preg_match("/^([a-zA-Z' ]+)$/", $name)){
         $result = true;
     }else {
         $result = false;
@@ -91,7 +91,7 @@ function emptyInputLogin($name, $password){
 }
 
 function loginUser($conn, $username, $password){
-    $uidExists = uidExists($conn, $username, $password);
+    $uidExists = uidExists($conn, $username, $username);
 
     if ($uidExists === false) {
         header("location: ../index.php?error=wronglogin");
@@ -158,7 +158,7 @@ function resetPassword($conn, $oldPassword, $newPassword, $id){
 
 
     if($option === false){
-        header("location:db.inc.php");
+        header("location:../users.resetPassword.php?ID=" . $id . "&error=wrongPassword");
     }else{
         $hashedPassword = password_hash($newPassword, PASSWORD_DEFAULT);
 
@@ -246,7 +246,7 @@ function deleteUser($conn, $id){
     $sql = "DELETE FROM users WHERE userID = ?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../events.edit.php?error=stmtfailed&ID=" . $id);
+        header("location: ../events.delete.php?error=stmtfailed&ID=" . $id);
         exit();
     }
 
@@ -260,7 +260,7 @@ function addSignup($conn, $name, $id){
     $sql = "INSERT INTO signups (userID, eventId) VALUES (?,?)";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../index.php?error=stmtfailed");
+        header("location: ../signup.Add.php?error=stmtfailed");
         exit();
     }
 
@@ -275,7 +275,7 @@ function alreadySigned($conn, $name, $id){
     $sql = "SELECT * FROM signups WHERE userID = ? AND eventId = ?"; //check if email or username already exists
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)){
-        header("location: ../index.php?error=stmtfailed");
+        header("location: ../signup.Add.php?error=stmtfailed");
         exit();
     }
 
@@ -293,7 +293,7 @@ function alreadySigned($conn, $name, $id){
     }
 }
 
-function deleteEvent($conn, $name, $id){
+function deleteSignup($conn, $name, $id){
     $sql = "DELETE FROM signups WHERE userID = ? AND eventId = ?";
     $stmt = mysqli_stmt_init($conn);
     if (!mysqli_stmt_prepare($stmt, $sql)){
@@ -304,5 +304,5 @@ function deleteEvent($conn, $name, $id){
     mysqli_stmt_bind_param($stmt, "ii", $id, $name);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
-    header("location: ../users.php?error=none");
+    header("location: ../eventsView.php?ID=". $name);
 }

@@ -1,3 +1,10 @@
+<?php
+    include("includes/db.inc.php");
+    if (!isset($_SESSION["userID"])){
+        header("location:index.php");
+    }
+?>
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -27,7 +34,7 @@
         </div>
         <div style="margin-left:3em">
           <p>Capacity:</p>
-          <input type="number" placeholder="Number" name="capacity">
+          <input type="number" placeholder="Number" name="capacity" min="1" max="1000000">
           <p>Country:</p>
           <input type="text" placeholder="Country" name="country">
         </div>
@@ -36,6 +43,17 @@
 
       <input type="submit" name="submit">
     </form>
+  </div>
+  <div style="text-align:center; color:red; margin-top:1em">
+    <?php
+      if(isset($_GET["error"])){
+        if($_GET["error"] == "emptyinput"){
+          echo "Fill in all fields";
+        }else if($_GET["error"] == "stmtfailed"){
+          echo "SQL statement failed to initialize";
+        }
+      }
+    ?>
   </div>
 </body>
 </html>

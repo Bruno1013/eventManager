@@ -8,12 +8,12 @@
         require "db.inc.php";
         require "functions.inc.php";
 
+        $id = $_GET["ID"];
+
 
         if (emptyReset($oldPassword, $newPassword) !== false) {
-            header("location: ../users.resetPassword.php?error=emptyinput");
+            header("location: ../users.resetPassword.php?ID=" . $id ."&error=emptyinput");
             exit();
-        }else{
-            $id = $_GET["ID"];
         }
 
         resetPassword($conn, $oldPassword, $newPassword, $id);

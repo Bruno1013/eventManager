@@ -51,14 +51,15 @@
                     </tr>
                 </thead>
                 <tbody>
-                    <?php while($signups = mysqli_fetch_assoc($result)) { ?>
+                    <?php while($signups = mysqli_fetch_assoc($result)) { 
+                        $user = $signups["userID"]?>
                         
                         <tr>
                             <td><?= $signups["userName"] ?></td>
                             <td><?= $signups["userAge"] ?></td>
                             <td><?= $signups["userGender"] ?></td>
                             <td><?= $signups["userCountry"] ?></td>
-                            <td><button onclick="window.location.href = 'includes/deleteSignup.inc.php?ID=<?= $id ?>';" style="background-color:red">Delete</button></td>
+                            <td><button onclick="window.location.href = 'includes/deleteSignup.inc.php?ID=<?= $id ?>&user=<?= $user ?>';" style="background-color:red">Delete</button></td>
                         </tr>
 
                     <?php } ?>  

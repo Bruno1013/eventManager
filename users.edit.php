@@ -1,8 +1,8 @@
 <?php
   include("includes/db.inc.php");
-  // if (!isset($_SESSION["userID"])){
-  //   header("location:index.php");
-  // }
+  if (!isset($_SESSION["userID"])){
+    header("location:index.php");
+  }
 
   $id = $_GET["ID"];
   $sql = "SELECT * FROM users WHERE userID =" . $id;
@@ -28,7 +28,7 @@
         <div class="middle">
           <div style="width:30%">
             <p>Name:</p>
-            <input type="text" placeholder="Name" name="name" value="<?= $row["userName"] ?>" >
+            <input type="text" placeholder="Name" name="name" value="<?= $row["userName"] ?>" min="1" max="100">
             <p>Gender:</p>
             <select name="gender" id="gender">
               <option value="" disabled hidden>Select here</option>

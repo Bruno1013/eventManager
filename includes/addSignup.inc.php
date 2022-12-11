@@ -9,7 +9,7 @@ if (isset($_POST["submit"])){
     require "functions.inc.php";
 
     if(empty($name) !== false){
-        header("location:../signup.add.php?error=emptyinput");
+        header("location:../signup.add.php?ID=" . $id . "&error=emptyinput");
         exit();
     }
 

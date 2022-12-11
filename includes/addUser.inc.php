@@ -14,10 +14,22 @@ if (isset($_POST["submit"])){
     require "functions.inc.php";
 
     if(emptyInputSignup($name, $email, $username, $age, $country, $gender, $password, $admin) !== false){
-        header("location:../events.add.php?error=emptyinput");
+        header("location:../users.add.php?error=emptyinput");
+        exit();
+    }
+    
+    if(invalidName($name) !== false){
+        header("location:../users.add.php?error=invalidName");
         exit();
     }
 
+    if(invalidEmail($email) !== false){
+        header("location:../users.add.php?error=invalidEmail");
+        exit();
+    }
+
+
+    
 
 
     createUser($conn, $name, $email, $username, $age, $country, $gender, $password, 1);

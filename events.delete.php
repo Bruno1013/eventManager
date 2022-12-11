@@ -1,8 +1,8 @@
 <?php
   include("includes/db.inc.php");
-  // if (!isset($_SESSION["userID"])){
-  //   header("location:index.php");
-  // }
+  if (!isset($_SESSION["userID"])){
+      header("location:index.php");
+  }
 
   $id = $_GET["ID"];
   $sql = "SELECT * FROM events WHERE eventsId =" . $id;

@@ -1,8 +1,8 @@
 <?php
   include("includes/db.inc.php");
-  // if (!isset($_SESSION["userID"])){
-  //   header("location:index.php");
-  // }
+  if (!isset($_SESSION["userID"])){
+    header("location:index.php");
+  }
 
   $id = $_GET["ID"];
   $sql = "SELECT * FROM events WHERE eventsId =" . $id;
@@ -39,7 +39,7 @@
         </div>
         <div style="margin-left:3em">
           <p>Capacity:</p>
-          <input type="number" placeholder="Number" name="capacity" value="<?= $row["eventCapacity"] ?>">
+          <input type="number" placeholder="Number" name="capacity" value="<?= $row["eventCapacity"] ?>" min="1" max="1000000">
           <p>Country:</p>
           <input type="text" placeholder="Country" name="country" value="<?= $row["eventCountry"] ?>">
         </div>

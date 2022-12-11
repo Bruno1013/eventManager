@@ -1,3 +1,10 @@
+<?php
+  include("includes/db.inc.php");
+  if (!isset($_SESSION["userID"])){
+    header("location:index.php");
+  }
+
+?>
 
 <!DOCTYPE html>
 <html lang="en">
@@ -14,7 +21,7 @@
       <div class="middle">
         <div>
           <p>Name:</p>
-          <input type="text" placeholder="Name" name="name">
+          <input type="text" placeholder="Name" name="name" min="1" max="100">
           <p>Gender:</p>
           <select name="gender" id="gender">
             <option value="" hidden>Select here</option>
@@ -41,6 +48,22 @@
       
           <input type="submit" name="submit"> 
     </form>
+  </div>
+
+  <div style="text-align:center; color:red; margin-top:1em">
+    <?php
+      if(isset($_GET["error"])){
+        if($_GET["error"] == "emptyinput"){
+          echo "Fill in all fields";
+        }else if($_GET["error"] == "stmtfailed"){
+          echo "SQL statement failed to initialize";
+        }else if($_GET["error"] == "invalidName"){
+          echo "Please type a valid name";
+        }else if($_GET["error"] == "invalidEmail"){
+          echo "Please type a valid email";
+        }
+      }
+    ?>
   </div>
 </body>
 </html>

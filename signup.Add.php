@@ -1,8 +1,8 @@
 <?php
   include("includes/db.inc.php");
-  // if (!isset($_SESSION["userID"])){
-  //   header("location:index.php");
-  // }
+  if (!isset($_SESSION["userID"])){
+    header("location:index.php");
+  }
 
   $id = $_GET["ID"];
   
@@ -53,6 +53,9 @@
         }
       ?>
     </p>
+  </div>\
+  <div style="display:flex; justify-content:center; margin-top:2em">
+    <button onclick="window.location.href = 'eventsView.php?ID=<?= $id ?>';">Return</button>
   </div>
 </body>
 </html>
